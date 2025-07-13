@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="home-container">
+      <img src="/image/logo.png" alt="Chess Online Logo" class="home-logo" />
+      <header class="home-header">
+        <h1>Welcome to Chess.com</h1>
+        <p>The ultimate destination for modern chess enthusiasts.</p>
+      </header>
+
+      <div class="options">
+        <button id="playBtn" class="btn btn-primary">Play a Game</button>
+      </div>
+
+      <div class="ongoing-games">
+        <h2><span class="live-indicator"></span>Live Games</h2>
+        <div id="gameList" class="game-list">
+          <% if(games.length === 0) { %>
+          <p class="no-games">No games currently in progress. Start one!</p>
+          <% } else { %> <% games.forEach(game => { %>
+          <a href="/game/<%= game.id %>" class="game-item">
+            <div class="game-item-players">
+              <span class="player-name"><%= game.white %></span>
+              <span class="vs-text">vs</span>
+              <span class="player-name"><%= game.black %></span>
+            </div>
+            <div class="game-item-info">
+              <span><%= game.viewerCount %> watching</span>
+            </div>
+          </a>
+          <% }) %> <% } %>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+    <script src="/js/home.js"></script>
+  </body>
+</html>
