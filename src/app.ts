@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
     }));
 
   res.render("home", {
-    title: "Chess Online",
+    title: "Chess.com",
     games: ongoingGames,
   });
 });
@@ -58,7 +58,7 @@ app.get("/game/:gameId", (req, res) => {
   const gameId = req.params.gameId;
   if (games[gameId]) {
     res.render("game", {
-      title: "Chess Game",
+      title: "Chess.com",
       gameId: gameId,
     });
   } else {
@@ -207,6 +207,7 @@ io.on("connection", (socket: Socket) => {
         }
       } catch (err) {
         console.error("Error on move:", err);
+        socket.emit("invalidMove", { move: move, reason: "Invalid move." });
       }
     }
   );
