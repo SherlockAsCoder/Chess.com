@@ -1,15 +1,48 @@
-const socket = io();
+const socket = io({ timeout: 5000 });
 
 const playBtn = document.getElementById("playBtn");
+const playStatus = document.getElementById("playStatus");
 const gameList = document.getElementById("gameList");
 
+const setPlayState = (label, message, disabled = true) => {
+  playBtn.textContent = label;
+  playBtn.disabled = disabled;
+  playStatus.textContent = message;
+};
+
+socket.on("connect", () => {
+  setPlayState("Play a Game", "Ready to find an opponent.", false);
+});
+
+socket.on("connect_error", () => {
+  setPlayState(
+    "Reconnecting...",
+    "Unable to connect to the server. Retrying..."
+  );
+});
+
+socket.on("disconnect", () => {
+  setPlayState(
+    "Reconnecting...",
+    "Connection lost. Reconnecting to the server..."
+  );
+});
+
 playBtn.addEventListener("click", () => {
-  playBtn.disabled = true;
+  if (!socket.connected || playBtn.disabled) return;
+
+  setPlayState(
+    "Finding Opponent...",
+    "Looking for another player to join."
+  );
   socket.emit("playOnline");
 });
 
 socket.on("waiting", () => {
-  playBtn.textContent = "Waiting for Opponent...";
+  setPlayState(
+    "Waiting for Opponent...",
+    "Your game will start when another player joins."
+  );
 });
 
 socket.on("redirectToGame", ({ gameId, token }) => {

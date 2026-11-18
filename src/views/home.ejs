@@ -15,7 +15,10 @@
       </header>
 
       <div class="options">
-        <button id="playBtn" class="btn btn-primary">Play a Game</button>
+        <button id="playBtn" class="btn btn-primary" disabled>Connecting...</button>
+        <p id="playStatus" class="play-status" role="status">
+          Connecting to the server...
+        </p>
       </div>
 
       <div class="ongoing-games">
@@ -39,7 +42,7 @@
       </div>
     </div>
 
-    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-    <script src="/js/home.js"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/js/home.js" defer></script>
   </body>
 </html>

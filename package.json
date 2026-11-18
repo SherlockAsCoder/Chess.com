@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node --loader ts-node/esm src/app.ts"
+    "predev": "npm run typecheck",
+    "dev": "tsx src/app.ts",
+    "typecheck": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
     "typescript": "^5.8.3",
     "yarn": "^1.22.22"
   },
